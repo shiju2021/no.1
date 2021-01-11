@@ -1,0 +1,27 @@
+name: JDshareCode
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '1 0,23 */2 * *'
+
+jobs:
+  deploy:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: JDshareCode
+      run: |
+        for ((a=1; a <= 15; a++))
+        do
+            curl http://api.turinglabs.net/api/v1/jd/bean/create/olmijoxgmjutzr2rlylpnfhsdfcqe2scndhws3i/
+            curl http://api.turinglabs.net/api/v1/jd/farm/11702238f4624a9a92e7494483515a00/
+            curl http://api.turinglabs.net/api/v1/jd/pet/create/MTAxODc2NTEzMjAwMDAwMDAyNzIyNzE1Mw==/
+            curl http://api.turinglabs.net/api/v1/jd/jxfactory/create/T76ufOSQ3-p1EnGXWSDoPw==/
+            curl http://api.turinglabs.net/api/v1/jd/ddfactory/create/T0225KkcRh4bowCFIR2gwqMMfQCjVWnYaS5kRrbA/
+            curl https://code.chiang.fun/api/v1/jd/jdzz/create/AUWE5ma2Sm2FaCWesiyhMnA/
+            curl https://code.chiang.fun/api/v1/jd/jd_dreamFactory/create/T76ufOSQ3-p1EnGXWSDoPw==/
+            curl https://code.chiang.fun/api/v1/jd/jdcrazyjoy/create/Gu_z5RB7x2bhqIiEnrHcBqt9zd5YaBeE/
+            
+        done
