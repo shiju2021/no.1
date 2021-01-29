@@ -275,33 +275,6 @@ function get_pkg() {
   })
 }
 
-
-//首页宝箱
-function firstbox() {
-  return new Promise((resolve, reject) =>{
-    let bdurl = {
-      url: 'https://mbrowser.baidu.com/lite/gold/receive?service=bdbox',
-      headers: {
-        "Cookie": cookieval,
-        "User-Agent": UA
-      },
-      body: 'task_type=-1&task_id=-1'
-    }
-    $.post(bdurl, (error, resp, data) =>{
-      let get_first = JSON.parse(data)
-      //$.log("获取首页宝箱信息:"+data +'\n')
-      if (get_first.err_no == 0) {
-        $.desc += "【首页宝箱】" + get_first.data.result.tips + "， " + get_first.data.result.countdown_time + "秒后再次开启宝箱\n"
-      } else if (get_first.err_no == 10079) {
-        $.desc += "【首页宝箱】✅ " + get_first.tip + '\n'
-      } else if (get_first.err_no == 10060) {
-        $.log("首页宝箱开启失败"+get_first.tip)
-      }
-      resolve()
-    })
-  })
-}
-
 function activeBox() {
   return new Promise((resolve, reject) =>{
     let actboxurl = {
@@ -335,7 +308,7 @@ function activeBox() {
     })
   })
 }
-function finishTask() {
+/*function finishTask() {
   return new Promise((resolve, reject) =>{
     let actboxurl = {
       url: `https://eopa.baidu.com/api/task/1/task/${taskid}/complete?rewardType=coin&rewardVideoPkg=${Pkg}&sys=ios`,
@@ -367,7 +340,7 @@ function finishTask() {
     })
   })
 }
-
+*/
 
 function get_search(cmd) {
   return new Promise((resolve) =>{
