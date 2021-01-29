@@ -621,11 +621,6 @@ function doubleBox() {
     })
 }
 
-function showmsg() {
-
-     $.msg($.name,$.sub,$.desc)
-
-}
 
 
 
