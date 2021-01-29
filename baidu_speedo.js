@@ -246,7 +246,7 @@ async function getConfigs() {
 }
 
 
-/视频
+//视频
 function get_pkg() {
   return new Promise((resolve, reject) =>{
     let pkgurl = {
@@ -269,6 +269,33 @@ function get_pkg() {
       } else if (get_pkg.errno == 0 && get_pkg.data.isDone == 1) {
         // $.desc += taskName + "✅ 已完成\n";       
         // $.log(taskName + "已完成\n")
+      }
+      resolve()
+    })
+  })
+}
+
+
+//首页宝箱
+function firstbox() {
+  return new Promise((resolve, reject) =>{
+    let bdurl = {
+      url: 'https://mbrowser.baidu.com/lite/gold/receive?service=bdbox',
+      headers: {
+        "Cookie": cookieval,
+        "User-Agent": UA
+      },
+      body: 'task_type=-1&task_id=-1'
+    }
+    $.post(bdurl, (error, resp, data) =>{
+      let get_first = JSON.parse(data)
+      //$.log("获取首页宝箱信息:"+data +'\n')
+      if (get_first.err_no == 0) {
+        $.desc += "【首页宝箱】" + get_first.data.result.tips + "， " + get_first.data.result.countdown_time + "秒后再次开启宝箱\n"
+      } else if (get_first.err_no == 10079) {
+        $.desc += "【首页宝箱】✅ " + get_first.tip + '\n'
+      } else if (get_first.err_no == 10060) {
+        $.log("首页宝箱开启失败"+get_first.tip)
       }
       resolve()
     })
@@ -403,47 +430,63 @@ function get_search(cmd) {
 }
 
 function get_search(cmd) {
-    return new Promise((resolve) =>{
-        let geturl = {
-            url: `https://mbd.baidu.com/searchbox?action=feed&cmd=${cmd}&network=1_0&osbranch=i3&osname=baiduboxapp&uid=A49D6DBEA0E8C89406AD1484C84D9134FCF6C8758FHLNHLAJSR&ut=iPhone10%2C1_14.2&ua=1242_2208_iphone_7.0.0.11_0`,
-            headers: {
-                Cookie: cookieval,
-                'User-Agent': UA
+  return new Promise((resolve) =>{
+    let geturl = {
+      url: `https://mbd.baidu.com/searchbox?action=feed&cmd=${cmd}&network=1_0&osbranch=i3&osname=baiduboxapp&uid=A49D6DBEA0E8C89406AD1484C84D9134FCF6C8758FHLNHLAJSR&ut=iPhone10%2C1_14.2&ua=1242_2208_iphone_5.0.0.11_0&fv=12.1.0.0`,
+      headers: {
+        Cookie: cookieval,
+        'User-Agent': UA
+      }
+    }
+    $.get(geturl, async(error, resp, data) =>{
+      try {
+        $.log(" tid:" + tid + " 状态码:" + resp.statusCode);
+        let get_search = JSON.parse(data);
+        if (get_search.errno == 0) {
+          for (items of get_search.data[`${cmd}`].itemlist.items) {
+            searchId = items.id,
+            searchname = items.data.title;
+            author = items.data.author
+            if (items.data.mode == "video" || items.data.type == "video") {
+              $.log(" 观看视频: " + searchname + "  —————— " + author);
             }
+            else if (items.data.mode == "text") {
+              $.log(" 阅读短文: " + searchname + "\n " + "  —————— " + items.data.tag ? items.data.tag: "");
+            }
+            else if (items.data.mode == "ad") {
+              $.log(" 打开广告: " + author + ": " + searchname);
+            }
+            if (typeof coin == "undefined") {
+              $.log(" 请等待，30s后获取收益\n");
+              await $.wait(30000);  
+              await searchBox(searchId)
+            } else if (coin == 0) {
+              $.log(" 请等待5s获取收益\n");
+              await $.wait(5000);
+              await searchBox(searchId)
+              coin = "undefined";
+            } else if (coin == 3) {
+              $.log(" 金币为3时，跳出运行\n");
+              await $.wait(2000)
+              coin = "undefined";
+              break
+            } else {
+              $.log(" 请等待，30s后获取收益\n");
+              await $.wait(30000);
+              await searchBox(searchId)
+            }
+            //totalcoin += coin
+            //$.log(totalcoin)
+          }
+          //$.desc += taskName + "获得收益"+ totalcoin+ "金币" +coin + "\n"
         }
-        $.get(geturl, async(error, resp, data) =>{
-            let get_search = JSON.parse(data)
-           // $.log(data+'\n')
-            try {
-                if (get_search.errno == 0) {
-                  let tip = 0
-                    for (items of get_search.data[`${cmd}`].itemlist.items) {
-                        searchId = items.id,
-                        searchname = items.data.title;
-                      
-                   if(items.data.mode=="video"){
-                        $.log("\n 观看视频: " + searchname + "\n 任务ID:  " + searchId + "\n\n  请等待30s获取收益");
-                        await $.wait(35000)
-                      }
-                  if(items.data.mode=="text"){
-                        $.log("\n 阅读文章: " + searchname + "\n 任务ID:  " + searchId + "\n\n  请等待32s获取收益");
-                        await $.wait(37000)
-                      }
-                  if(items.data.mode=="ad"){
-                        $.log("\n 广告: " + searchname + "\n 任务ID:  " + searchId + "\n\n  请等待15s获取收益");
-                        await $.wait(20000)
-                      }
-                        await searchBox(searchId);
-                    }
-                   $.desc += taskName + "获得收益"+ tip +"\n"
-              }
-            } catch(e) {
-                $.logErr(e, data);
-            } finally {
-                resolve()
-            }
-        })
+      } catch(error) {
+        $.logErr(error + data);
+      } finally {
+        resolve()
+      }
     })
+  })
 }
 
 function searchBox(id) {
@@ -476,6 +519,7 @@ function searchBox(id) {
         })
     })
 }
+
 //缩减开宝箱时间
 function chestTime() {
     return new Promise((resolve, reject) =>{
@@ -546,10 +590,8 @@ function doubleBox() {
     })
   })
 }
-
 function showmsg() {
      $.msg($.name,$.sub,$.desc)
-
 }*/
 
 //头部宝箱
@@ -594,6 +636,11 @@ function doubleBox() {
     })
 }
 
+function showmsg() {
+
+     $.msg($.name,$.sub,$.desc)
+
+}
 
 
 
