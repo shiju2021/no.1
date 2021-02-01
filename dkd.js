@@ -25,9 +25,65 @@ hostname = dkd-api.dysdk.com
 */
 const $ = new Env('多看点');
 const openurl = { "open-url" : "dysdk://" }
+//let dkdurl = $.getdata('dkdurl')
+//let dkdhd = $.getdata('dkdhd')
+//let dkdbody = $.getdata('dkdbody')
+
+let DKDurl = [], DKDhd = [], DKDbody = [];
+let dkdurlArr = [],dkdhdArr = [],dkdbodyArr = [];
 let dkdurl = $.getdata('dkdurl')
 let dkdhd = $.getdata('dkdhd')
 let dkdbody = $.getdata('dkdbody')
+if (isGetCookie = typeof $request !==`undefined`) {
+   GetCookie();
+   $.done()
+} 
+
+if ($.isNode()) {
+  if (process.env.DKDURL && process.env.DKDURL.indexOf('&') > -1) {
+  DKDurl = process.env.DKDURL.split('&');
+  }else {
+  DKDurl = process.env.DKDURL.split()
+  };
+   if (process.env.DKDHD && process.env.DKDHD.indexOf('&') > -1) {
+  DKDhd = process.env.DKDHD.split('&');
+  } else {
+  DKDhd = process.env.DKDHD.split()
+  };
+   if (process.env.DKDBODY && process.env.DKDBODY.indexOf('&') > -1) {
+  DKDbody = process.env.DKDBODY.split('&');
+  } else {
+  DKDbody = process.env.DKDBODY.split()
+  }
+} else {
+  DKDurl = $.getdata('DKDURL').split('&');
+  DKDhd = $.getdata('DKDHD').split('&');
+  DKDbody = $.getdata('DKDBODY').split('&');
+}
+  Object.keys(DKDurl).forEach((item) => {
+        if (DKDurl[item]) {
+          dkdurlArr.push(DKDurl[item])
+        } 
+    })
+
+  Object.keys(DKDHD).forEach((item) => {
+        if (DKDHD[item]) {
+          dkdhdArr.push(DKDHD[item])
+        }
+    })
+   
+  Object.keys(DKDBODY).forEach((item) => {
+        if (DKDBODY[item]) {
+         dkdbodyArr.push(DKDBODY[item])
+        }
+    })
+
+if ($.isNode()) {
+      console.log(`============ 脚本执行-国际标准时间(UTC)：${new Date().toLocaleString()}  =============\n`)
+      console.log(`============ 脚本执行-北京时间(UTC+8)：${new Date(new Date().getTime() + 8 * 60 * 60 * 1000).toLocaleString()}  =============\n`)
+}
+
+
 !(async () => {
   if (typeof $request !== "undefined") {
     await dkdck()
