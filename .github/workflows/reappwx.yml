@@ -19,7 +19,7 @@ jobs:
     steps:
       - name: Checkout
         run: |
-          git clone https://github.com/ZhiYi-N/script.git ~/script
+          git clone https://github.com/human619/hymzy.git ~/hymzy
       - name: Use Node.js 14.x
         uses: actions/setup-node@v1
         with:
@@ -27,12 +27,12 @@ jobs:
       - name: npm install
         if: env.QQREAD_COOKIE
         run: |
-          cd ~/script
+          cd ~/hymzy
           npm install
       - name: '运行 【reappwx】'
         if: env.QQREAD_COOKIE
         run: |
-          cd ~/script
+          cd ~/hymzy
           node qqreadapp.js
         env:
           PUSH_KEY: ${{ secrets.PUSH_KEY }}
