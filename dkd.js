@@ -85,7 +85,30 @@ if ($.isNode()) {
 
 
 !(async () => {
-  if (typeof $request !== "undefined") {
+ 
+  if (!dkdurlArr[0]) {
+    console.log($.name, '【提示】请把抓包的请求体填入Github 的 Secrets 中，请以&隔开')
+    return;
+  }
+  console.log(`您共提供${dkdurlArr.length}任务`)
+  for (let i = 0; i < startArr.length; i++) {
+    if (startArr[i]) {
+      dkdurl = dkdurlArr[i];
+      dkdhd = dkdhdArr[i];
+      dkdbody = dkdbodyArr[i]
+      $.index = i + 1;
+    console.log(`-------------------------\n\n开始DKD第${$.index}次任务`)
+    }
+      await DKDurl();
+ }
+   console.log(`-------------------------\n\nDKD共完成${$.index}次任务，共计获得${gainscore}个金币，DKD任务全部结束`);
+   $.msg($.name, `共完成${$.index}次任务`, `共计获得${gainscore}个金币`)
+   if ($.isNode()){
+     //await notify.sendNotify($.name，`共完成${$.index}次任务，\n共计获得${gainscore}个金币`
+}
+})()
+
+   if (typeof $request !== "undefined") {
     await dkdck()
   } else {
     await dkdqd()
