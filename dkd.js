@@ -107,13 +107,13 @@ if ($.isNode()) {
      //await notify.sendNotify($.name，`共完成${$.index}次任务，\n共计获得${gainscore}个金币`
 }
 })()
-
+/*
    if (typeof $request !== "undefined") {
     await dkdck()
   } else {
     await dkdqd()
   }
-})()
+})()*/
   .catch((e) => $.logErr(e))
   .finally(() => $.done())
 //多看点数据获取
