@@ -26,11 +26,12 @@ if ($.isNode()) {
    minute = (new Date()).getMinutes();
 }
 //CK运行
+/*
 let isGetCookie = typeof $request !== 'undefined'
 if (isGetCookie) {
    GetCookie();
    $.done()
-} 
+} */
 if ($.isNode()) {
    if (process.env.HSURL && process.env.HSURL.indexOf('#') > -1) {
    hsurl = process.env.HSURL.split('#');
