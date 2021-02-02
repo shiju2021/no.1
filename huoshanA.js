@@ -11,6 +11,7 @@ let hsurl = $.getdata('hsurl')
 let hsheader = $.getdata('hsheader')
 let hsbody = $.getdata('hsbody')
 let tz = ($.getval('tz') || '1');//0关闭通知，1默认开启
+const invite=1;
 const logs =0;//0为关闭日志，1为开启
 var hour=''
 var minute=''
@@ -26,7 +27,6 @@ if ($.isNode()) {
    minute = (new Date()).getMinutes();
 }
 //CK运行
-
 let isGetCookie = typeof $request !== 'undefined'
 if (isGetCookie) {
    GetCookie();
@@ -108,7 +108,7 @@ if (process.env.PLAYURL && process.env.PLAYURL.indexOf('#') > -1) {
     hsheaderArr.push($.getdata(`hsheader${i}`))
     hsbodyArr.push($.getdata(`hsbody${i}`))
     playurlArr.push($.getdata(`playurl${i}`))
-    playhsbodyArr.push($.getdata(`playbody${i}`))
+playheaderArr.push($.getdata(`playheader${i}`))
     playbodyArr.push($.getdata(`playbody${i}`))
   }
 }
@@ -194,7 +194,7 @@ for(let i = 0;i <= 4;i++){
    item_id_inv = item_id[i]
    $.log(item_id_inv)
    let x = Math.random()
-   let delay = x > 0.5? x*60000 : (x+0.5)*60000
+   let delay = x > 0.5? x*60000 : (x+0.5)*30000
    console.log('⏰本次延迟'+Math.round(delay/1000)+'秒')
    await sleep(delay)
    await play_video()
@@ -466,8 +466,8 @@ async function video_rewards(){
         const result = JSON.parse(data)
         if(logs)$.log(data)
         if(result.status_code == 0){
-	    let token = result.data.next_token.replace("%3D","=")
-	    let newhsbody = hsbody.replace(/WJ.*?(?==)./,`${token}`)
+	    let token = result.data.next_token.match(/WJ.*?(?==)/)+''.replace("%3D","=")
+	    let newhsbody = hsbody.replace(/WJ.*?(?==)/,`${token}`)
          let _hsbody = newhsbody.replace("%3D","=")
          hsbody = _hsbody
          $.setdata(_hsbody,`hsbody${status}`)
