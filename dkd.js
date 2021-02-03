@@ -25,7 +25,7 @@
 hostname = dkd-api.dysdk.com
 */
 const $ = new Env('多看点');
-
+const notify = $.isNode() ?require('./sendNotify') : '';
 let status;
 status = (status = ($.getval("hsstatus") || "1") ) > 1 ? `${status}` : ""; // 账号扩展字符
 
@@ -41,7 +41,12 @@ let dkdtxbody = $.getdata('dkdtxbody')
 let tz = ($.getval('tz') || '1');//0关闭通知，1默认开启
 const logs =0;//0为关闭日志，1为开启
 
-
+if ($.isNode()) {
+   hour = new Date( new Date().getTime() + 8 * 60 * 60 * 1000 ).getHours();
+   minute = new Date( new Date().getTime() + 8 * 60 * 60 * 1000 ).getMinutes();
+}else{
+   hour = (new Date()).getHours();
+   minute = (new Date()).getMinutes();
 
 if ($.isNode()) {
    if (process.env.DKDURL && process.env.DKDURL.indexOf('#') > -1) {
@@ -138,8 +143,6 @@ if (process.env.DKDTXURL && process.env.DKDTXURL.indexOf('#') > -1) {
         }
     });
 
-
-    console.log(`============ 脚本执行-国际标准时间(UTC)：${new Date().toLocaleString()}  =============\n`)
     console.log(`============ 脚本执行-北京时间(UTC+8)：${new Date(new Date().getTime() + 8 * 60 * 60 * 1000).toLocaleString()}  =============\n`)
  } else {
     dkdurlArr.push($.getdata('dkdurl'))
@@ -161,11 +164,27 @@ if (process.env.DKDTXURL && process.env.DKDTXURL.indexOf('#') > -1) {
 
 !(async () => {
   if (typeof $request !== "undefined") {
+     $.msg($.name, '【提示】请先获取DKD一cookie')
+    return;
+  }
+   console.log(`------------- 共${dkdhdArr.length}个账号----------------\n`)
+  for (let i = 0; i < dkdhdArr.length; i++) {
+    if (dkdhdArr[i]) {
+      message = ''
+      note = ''
+    dkdurl = dkdurlArr[i];
+    dkdhd = dkdhdArr[i];
+    dkdbody = dkdbodyArr[i];
+    dkdtxurl = dkdtxurlArr[i];
+    dkdtxhd = dkdtxhdArr[i];
+    dkdtxbody = dkdtxbodyArr[i];
+    $.index = i + 1;
+    console.log(`\n开始【DKD${$.index}】`)
     await dkdck()
     await dkdtxck()
   } else {
     await dkdqd()
-
+   }
   }
 })()
   .catch((e) => $.logErr(e))
