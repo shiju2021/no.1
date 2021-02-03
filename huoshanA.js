@@ -230,8 +230,8 @@ for(let i = 0;i <= 4;i++){
    item_id_inv = item_id[i]
    $.log(item_id_inv)
    let x = Math.random()
-   let delay = x > 0.5? x*60000 : (x+0.5)*30000
-   console.log('⏰本次延迟'+Math.round(delay/3000)+'秒')
+   let delay = x > 0.5? x*60000 : (x+0.5)*60000
+   console.log('⏰本次延迟'+Math.round(delay/1000)+'秒')
    await sleep(delay)
    await play_video()
    //await video_rewards()
