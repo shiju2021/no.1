@@ -1,4 +1,5 @@
 /*
+修改自用ac
 脚本说明：多看点自动任务
 目前包含签到，开宝箱，开双倍宝箱
 看广告，任务列表奖励领取，自动提现
@@ -24,96 +25,121 @@
 hostname = dkd-api.dysdk.com
 */
 const $ = new Env('多看点');
-const openurl = { "open-url" : "dysdk://" }
-//let dkdurl = $.getdata('dkdurl')
-//let dkdhd = $.getdata('dkdhd')
-//let dkdbody = $.getdata('dkdbody')
 
-let DKDurl = [], DKDhd = [], DKDbody = [];
-let dkdurlArr = [],dkdhdArr = [],dkdbodyArr = [];
+let status;
+status = (status = ($.getval("hsstatus") || "1") ) > 1 ? `${status}` : ""; // 账号扩展字符
+
+const dkdurlArr = [],dkdhdArr = [],dkdbodyArr = [],dkdtxurlArr = [],dkdtxhdArr = [],dkdtxbodyArr = []
+
 let dkdurl = $.getdata('dkdurl')
 let dkdhd = $.getdata('dkdhd')
 let dkdbody = $.getdata('dkdbody')
-if (isGetCookie = typeof $request !==`undefined`) {
-   GetCookie();
-   $.done()
-} 
+let dkdtxurl = $.getdata('dkdtxurl')
+let dkdtxhd = $.getdata('dkdtxhd')
+let dkdtxbody = $.getdata('dkdtxbody')
+
+let tz = ($.getval('tz') || '1');//0关闭通知，1默认开启
+const logs =0;//0为关闭日志，1为开启
 
 if ($.isNode()) {
-  if (process.env.DKDURL && process.env.DKDURL.indexOf('&') > -1) {
-  DKDurl = process.env.DKDURL.split('&');
-  }else {
-  DKDurl = process.env.DKDURL.split()
-  };
-   if (process.env.DKDHD && process.env.DKDHD.indexOf('&') > -1) {
-  DKDhd = process.env.DKDHD.split('&');
-  } else {
-  DKDhd = process.env.DKDHD.split()
-  };
-   if (process.env.DKDBODY && process.env.DKDBODY.indexOf('&') > -1) {
-  DKDbody = process.env.DKDBODY.split('&');
-  } else {
-  DKDbody = process.env.DKDBODY.split()
+   hour = new Date( new Date().getTime() + 8 * 60 * 60 * 1000 ).getHours();
+   minute = new Date( new Date().getTime() + 8 * 60 * 60 * 1000 ).getMinutes();
+}else{
+   hour = (new Date()).getHours();
+   minute = (new Date()).getMinutes();
+}
+
+
+if ($.isNode()) {
+   if (process.env.dkdbody && process.env.dkdbody.indexOf('#') > -1) {
+   dkdbody = process.env.dkdbody.split('#');
+   console.log(`您选择的是用"#"隔开\n`)
   }
-} else {
-  DKDurl = $.getdata('DKDURL').split('&');
-  DKDhd = $.getdata('DKDHD').split('&');
-  DKDbody = $.getdata('DKDBODY').split('&');
+  else if (process.env.dkdbody && process.env.dkdbody.indexOf('\n') > -1) {
+   dkdbody = process.env.dkdbody.split('\n');
+   console.log(`您选择的是用换行隔开\n`)
+  } else {
+   dkdbody = process.env.dkdbody.split()
+  };
+  if (process.env.dkdurl && process.env.dkdurl.indexOf('#') > -1) {
+   dkdurl = process.env.dkdurl.split('#');
+   console.log(`您选择的是用"#"隔开\n`)
+  }
+  else if (process.env.dkdurl && process.env.dkdurl.indexOf('\n') > -1) {
+   dkdurl = process.env.dkdurl.split('\n');
+   console.log(`您选择的是用换行隔开\n`)
+  } else {
+   dkdurl = process.env.dkdurl.split()
+  };
+  if (process.env.dkdhd && process.env.dkdhd.indexOf('#') > -1) {
+   dkdhd = process.env.dkdhd.split('#');
+   console.log(`您选择的是用"#"隔开\n`)
+  }
+  else if (process.env.dkdhd && process.env.dkdhd.indexOf('\n') > -1) {
+   dkdhd = process.env.dkdhd.split('\n');
+   console.log(`您选择的是用换行隔开\n`)
+  } else {
+   dkdhd = process.env.dkdhd.split()
+  };
+if (process.env.dkdtxurl && process.env.dkdtxurl.indexOf('#') > -1) {
+   dkdbody = process.env.dkdtxurl.split('#');
+   console.log(`您选择的是用"#"隔开\n`)
+  }
+  else if (process.env.dkdtxurl && process.env.dkdtxurl.indexOf('\n') > -1) {
+   dkdbody = process.env.dkdtxurl.split('\n');
+   console.log(`您选择的是用换行隔开\n`)
+  } else {
+   dkdbody = process.env.dkdtxurl.split()
+  };
+  if (process.env.dkdtxhd && process.env.dkdtxhd.indexOf('#') > -1) {
+   dkdurl = process.env.dkdtxhd.split('#');
+   console.log(`您选择的是用"#"隔开\n`)
+  }
+  else if (process.env.dkdtxhd && process.env.dkdtxhd.indexOf('\n') > -1) {
+   dkdurl = process.env.dkdtxhd.split('\n');
+   console.log(`您选择的是用换行隔开\n`)
+  } else {
+   dkdurl = process.env.dkdtxhd.split()
+  };
+  if (process.env.dkdtxbody && process.env.dkdtxbody.indexOf('#') > -1) {
+   dkdhd = process.env.dkdtxbody.split('#');
+   console.log(`您选择的是用"#"隔开\n`)
+  }
+  else if (process.env.dkdtxbody && process.env.dkdtxbody.indexOf('\n') > -1) {
+   dkdhd = process.env.dkdtxbody.split('\n');
+   console.log(`您选择的是用换行隔开\n`)
+  } else {
+   dkdhd = process.env.dkdtxbody.split()
+  };
+    console.log(`============ 脚本执行-国际标准时间(UTC)：${new Date().toLocaleString()}  =============\n`)
+    console.log(`============ 脚本执行-北京时间(UTC+8)：${new Date(new Date().getTime() + 8 * 60 * 60 * 1000).toLocaleString()}  =============\n`)
+ } else {
+    dkdbodyArr.push($.getdata('dkdbody'))
+    dkdurlArr.push($.getdata('dkdurl'))
+    dkdhdArr.push($.getdata('dkdhd'))
+    dkdtxurlArr.push($.getdata('dkdtxurl'))
+    dkdtxhdArr.push($.getdata('dkdtxhd'))
+    dkdtxbodyArr.push($.getdata('dkdtxbody'))
+    let hscount = ($.getval('hscount') || '1');
+  for (let i = 2; i <= hscount; i++) {
+	dkdbodyArr.push($.getdata(`dkdbody${i}`))
+    dkdurlArr.push($.getdata(`dkdurl${i}`))
+    dkdhdArr.push($.getdata(`dkdhd${i}`))
+    dkdtxurlArr.push($.getdata(`dkdtxurl${i}`))
+    playdkdhdArr.push($.getdata(`dkdtxbody${i}`))
+    dkdtxbodyArr.push($.getdata(`dkdtxbody${i}`))
+  }
 }
-  Object.keys(DKDurl).forEach((item) => {
-        if (DKDurl[item]) {
-          dkdurlArr.push(DKDurl[item])
-        } 
-    })
-
-  Object.keys(DKDHD).forEach((item) => {
-        if (DKDHD[item]) {
-          dkdhdArr.push(DKDHD[item])
-        }
-    })
-   
-  Object.keys(DKDBODY).forEach((item) => {
-        if (DKDBODY[item]) {
-         dkdbodyArr.push(DKDBODY[item])
-        }
-    })
-
-if ($.isNode()) {
-      console.log(`============ 脚本执行-国际标准时间(UTC)：${new Date().toLocaleString()}  =============\n`)
-      console.log(`============ 脚本执行-北京时间(UTC+8)：${new Date(new Date().getTime() + 8 * 60 * 60 * 1000).toLocaleString()}  =============\n`)
-}
-
 
 !(async () => {
- 
-  if (!dkdurlArr[0]) {
-    console.log($.name, '【提示】请把抓包的请求体填入Github 的 Secrets 中，请以&隔开')
-    return;
-  }
-  console.log(`您共提供${dkdurlArr.length}任务`)
-  for (let i = 0; i < startArr.length; i++) {
-    if (startArr[i]) {
-      dkdurl = dkdurlArr[i];
-      dkdhd = dkdhdArr[i];
-      dkdbody = dkdbodyArr[i]
-      $.index = i + 1;
-    console.log(`-------------------------\n\n开始DKD第${$.index}次任务`)
-    }
-      await DKDurl();
- }
-   console.log(`-------------------------\n\nDKD共完成${$.index}次任务，共计获得${gainscore}个金币，DKD任务全部结束`);
-   $.msg($.name, `共完成${$.index}次任务`, `共计获得${gainscore}个金币`)
-   if ($.isNode()){
-     //await notify.sendNotify($.name，`共完成${$.index}次任务，\n共计获得${gainscore}个金币`
-}
-})()
-/*
-   if (typeof $request !== "undefined") {
+  if (typeof $request !== "undefined") {
     await dkdck()
+    await dkdtxck()
   } else {
     await dkdqd()
+
   }
-})()*/
+})()
   .catch((e) => $.logErr(e))
   .finally(() => $.done())
 //多看点数据获取
@@ -129,7 +155,19 @@ $.log(dkdbody)
    $.msg($.name,"","多看点body获取成功！")
     }
   }
-  $.msg($.name,"",'多看点开始🖨')
+//多看点提现ck
+function dkdtxck() {
+   if ($request.url.indexOf("withdraw_do?") > -1) {
+    $.setdata(JSON.stringify($request.url),'dkdtxurl')
+    $.log(dkdtxurl)
+    $.setdata(JSON.stringify($request.headers),'dkdtxhd')
+$.log(dkdtxhd)
+    $.setdata($request.body,'dkdtxbody')
+$.log(dkdtxbody)
+   $.msg($.name,"","多看点提现数据获取成功！")
+   
+    }
+  }
 
 //多看点广告视频     
 function dkdgg(timeout = 0) {
@@ -298,13 +336,14 @@ if(result.status_code == 10020){
 //多看点提现
 function dkdtx(timeout = 0) {
   return new Promise((resolve) => {
+let str = dkdtxhd.match(/headerInfo":"\w+/)+''
 let url = {
-        url : 'http://dkd-api.dysdk.com/money/withdraw_do?'+dkdbody+'&headerInfo='+dkdhd.match(/headerinfo":"\w+/),
-        headers : JSON.parse($.getdata('dkdhd')),
-        body : '{"money":0.5,"type":2,"withdraw_card":null,"program":8,"is_special":1}',}
+        url : 'http://dkd-api.dysdk.com/money/withdraw_do?'+dkdbody+'&headerInfo='+str.replace('headerInfo":"',""),
+        headers : JSON.parse($.getdata('dkdtxhd')),
+        body : dkdtxbody,}
       $.post(url, async (err, resp, data) => {
         try {
-         //$.log(dkdhd.match(/headerinfo":"\w+/))
+         //$.log(str.replace('headerInfo":"',""))
     const result = JSON.parse(data)
         if(result.status_code == 200){
         console.log('提现回执:成功🌝 '+result.message)
@@ -320,6 +359,8 @@ if(result.status_code == 10020){
   })
 }
  
+
+
 //多看点签到
 function dkdqd(timeout = 0) {
   return new Promise((resolve) => {
@@ -343,8 +384,6 @@ if(result.status_code == 10020){
         console.log('签到回执:失败🚫 '+result.message)
 
 }
-//await dkdtx()  提现暂时无法使用
-await dkdyq()
 await dkdgg()
 await dkdbx()
 await dkdbxfb()
@@ -352,6 +391,9 @@ await dkdcj()
 await dkdfx()
 await dkdxs()
 await dkdxx()
+await dkdtx() 
+await dkdyq()
+
         } catch (e) {
           //$.logErr(e, resp);
         } finally {
@@ -374,7 +416,7 @@ let url = {
            //$.log(dkdbody)
     const result = JSON.parse(data)
         if(result.status_code == 200){
-       $.msg($.name,"",'用户信息回执:成功🌝\n'+'用户名: '+result.data.nickname+'\n当前余额:'+result.data.cash+'\n总金币:'+result.data.gold+'\n今日金币:'+result.data.today_gold)
+       $.msg($.name+'运行完毕！',"",'用户信息回执:成功🌝\n'+'用户名: '+result.data.nickname+'\n当前余额:'+result.data.cash+'\n总金币:'+result.data.gold+'\n今日金币:'+result.data.today_gold)
 }
 if(result.status_code == 10020){
         $.msg($.name,"",'运行完毕，用户信息获取失败🚫 '+result.message)}
