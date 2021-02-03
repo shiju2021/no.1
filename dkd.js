@@ -41,6 +41,8 @@ let dkdtxbody = $.getdata('dkdtxbody')
 let tz = ($.getval('tz') || '1');//0关闭通知，1默认开启
 const logs =0;//0为关闭日志，1为开启
 
+
+
 if ($.isNode()) {
    if (process.env.DKDURL && process.env.DKDURL.indexOf('#') > -1) {
     DKDURL = process.env.DKDURL.split('#');
@@ -102,6 +104,41 @@ if (process.env.DKDTXURL && process.env.DKDTXURL.indexOf('#') > -1) {
   } else {
    DKDTXBODY = process.env.DKDTXBODY.split()
   };
+
+   Object.keys(dkdurl).forEach((item) => {
+        if (dkdurl[item]) {
+          dkdurlArr.push(dkdurl[item])
+        }
+    });
+  Object.keys(dkdhd).forEach((item) => {
+        if (dkdhd[item]) {
+          dkdhdArr.push(dkdhd[item])
+        }
+    });
+
+  Object.keys(dkdbody).forEach((item) => {
+        if (dkdbody[item]) {
+          dkdbodyArr.push(dkdbody[item])
+        }
+    });
+  Object.keys(dkdtxurl).forEach((item) => {
+        if (dkdtxurl[item]) {
+          dkdtxurlArr.push(dkdtxurl[item])
+        }
+    });
+
+  Object.keys(dkdtxhd).forEach((item) => {
+        if (dkdtxhd[item]) {
+          dkdtxhdArr.push(dkdtxhd[item])
+        }
+    });
+  Object.keys(dkdtxbody).forEach((item) => {
+        if (dkdtxbody[item]) {
+          dkdtxbodyArr.push(dkdtxbody[item])
+        }
+    });
+
+
     console.log(`============ 脚本执行-国际标准时间(UTC)：${new Date().toLocaleString()}  =============\n`)
     console.log(`============ 脚本执行-北京时间(UTC+8)：${new Date(new Date().getTime() + 8 * 60 * 60 * 1000).toLocaleString()}  =============\n`)
  } else {
