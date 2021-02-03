@@ -158,13 +158,35 @@ if (process.env.DKDTXURL && process.env.DKDTXURL.indexOf('#') > -1) {
 }
 
 !(async () => {
-  if (typeof $request !== "undefined") {
-    await dkdck()
-    await dkdtxck()
-  } else {
-    await dkdqd()
-
+if (!dkdurlArr[0] && !dkdhdArr[0] && !dkdbody[0]) {
+    $.msg($.name, '【提示】请先获DKD一cookie')
+    return;
   }
+   console.log(`------------- 共${dkdhdArr.length}个账号----------------\n`)
+  for (let i = 0; i < hsheaderArr.length; i++) {
+    if (dkdhdArr[i]) {
+      message = ''
+      note = ''
+      dkdurl = dkdurlArr[i];
+      dkdhd = dkdhdArr[i];
+      dkdbody = dkdbodyArr[i];
+      dkdtxurl = dkdtxurlArr[i];
+      dkdtxhd = dkdtxhdArr[i];
+      dkdtxbody = dkdtxbodyArr[i];
+      $.index = i + 1;
+      console.log(`\n开始【【DKD${$.index}】`)
+      await dkdgg()
+      await dkdbx()
+      await dkdbxfb()
+      await dkdcj()
+      await dkdfx()
+      await dkdxs()
+      await dkdxx()
+      await dkdtx() 
+      await dkdyq()
+     
+  }
+ }
 })()
   .catch((e) => $.logErr(e))
   .finally(() => $.done())
