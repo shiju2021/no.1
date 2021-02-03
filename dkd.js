@@ -163,7 +163,7 @@ if (!dkdurlArr[0] && !dkdhdArr[0] && !dkdbody[0]) {
     return;
   }
    console.log(`------------- 共${dkdhdArr.length}个账号----------------\n`)
-  for (let i = 0; i < hsheaderArr.length; i++) {
+  for (let i = 0; i < dkdhdArr.length; i++) {
     if (dkdhdArr[i]) {
       message = ''
       note = ''
