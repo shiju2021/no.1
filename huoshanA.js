@@ -226,7 +226,7 @@ async function control(){
     await sleep(delay)
     await video_rewards()
 }
-for(let i = 0;i <= 4;i++){
+for(let i = 1;i <= 4;i++){
    item_id_inv = item_id[i]
    $.log(item_id_inv)
    let x = Math.random()
