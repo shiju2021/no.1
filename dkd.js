@@ -175,16 +175,6 @@ if (!dkdurlArr[0] && !dkdhdArr[0] && !dkdbody[0]) {
       dkdtxbody = dkdtxbodyArr[i];
       $.index = i + 1;
       console.log(`\n开始【【DKD${$.index}】`)
-      await dkdgg()
-      await dkdbx()
-      await dkdbxfb()
-      await dkdcj()
-      await dkdfx()
-      await dkdxs()
-      await dkdxx()
-      await dkdtx() 
-      await dkdyq()
-     
   }
  }
 })()
