@@ -8,106 +8,99 @@
 本脚本以学习为主！
 首次运行脚本，会提示获取Cookie，
 点击我的获取Cookie！
-
 我的邀请码：13182793 
-
-
 多看点自动任务
 圈X配置如下，其他软件自行测试
 [task_local]
 #多看点
 10 * * * * 
-
 [rewrite_local]
 #获取多看点Cookie
 ^http:\/\/dkd-api\.dysdk\.com\/user\/index url script-request-body dkd.js
-
 hostname = dkd-api.dysdk.com
 */
 const $ = new Env('多看点');
 const notify = $.isNode() ?require('./sendNotify') : '';
 let status;
 status = (status = ($.getval("hsstatus") || "1") ) > 1 ? `${status}` : ""; // 账号扩展字符
-
 const dkdurlArr = [],dkdhdArr = [],dkdbodyArr = [],dkdtxurlArr = [],dkdtxhdArr = [],dkdtxbodyArr = []
-
 let dkdurl = $.getdata('dkdurl')
 let dkdhd = $.getdata('dkdhd')
 let dkdbody = $.getdata('dkdbody')
 let dkdtxurl = $.getdata('dkdtxurl')
 let dkdtxhd = $.getdata('dkdtxhd')
 let dkdtxbody = $.getdata('dkdtxbody')
-
 let tz = ($.getval('tz') || '1');//0关闭通知，1默认开启
 const logs =0;//0为关闭日志，1为开启
-
+var hour=''
+var minute=''
 if ($.isNode()) {
    hour = new Date( new Date().getTime() + 8 * 60 * 60 * 1000 ).getHours();
    minute = new Date( new Date().getTime() + 8 * 60 * 60 * 1000 ).getMinutes();
 }else{
    hour = (new Date()).getHours();
    minute = (new Date()).getMinutes();
-
+}
 if ($.isNode()) {
    if (process.env.DKDURL && process.env.DKDURL.indexOf('#') > -1) {
-    DKDURL = process.env.DKDURL.split('#');
+    dkdurl = process.env.DKDURL.split('#');
     console.log(`您选择的是用"#"隔开\n`)
    }
    else if (process.env.DKDURL && process.env.DKDURL.indexOf('\n') > -1) {
-    DKDURL = process.env.DKDURL.split('\n');
+    dkdurl = process.env.DKDURL.split('\n');
     console.log(`您选择的是用换行隔开\n`)
    } else {
-    DKDURL = process.env.DKDURL.split()
+   dkdurl = process.env.DKDURL.split()
   };
   if (process.env.DKDHD && process.env.DKDHD.indexOf('#') > -1) {
-   DKDHD = process.env.DKDHD.split('#');
+   dkdhd = process.env.DKDHD.split('#');
    console.log(`您选择的是用"#"隔开\n`)
   }
   else if (process.env.DKDHD && process.env.DKDHD.indexOf('\n') > -1) {
-   DKDHD = process.env.DKDHD.split('\n');
+   dkdhd = process.env.DKDHD.split('\n');
    console.log(`您选择的是用换行隔开\n`)
   } else {
-   DKDHD = process.env.DKDHD.split()
+   dkdhd = process.env.DKDHD.split()
   };
   if (process.env.DKDBODY && process.env.DKDBODY.indexOf('#') > -1) {
-   DKDBODY = process.env.DKDBODY.split('#');
+   dkdbody = process.env.DKDBODY.split('#');
    console.log(`您选择的是用"#"隔开\n`)
   }
   else if (process.env.DKDBODY && process.env.DKDBODY.indexOf('\n') > -1) {
-   DKDBODY = process.env.DKDBODY.split('\n');
+   dkdbody = process.env.DKDBODY.split('\n');
    console.log(`您选择的是用换行隔开\n`)
   } else {
-   DKDBODY = process.env.DKDBODY.split()
+   dkdbody = process.env.DKDBODY.split()
   };
 if (process.env.DKDTXURL && process.env.DKDTXURL.indexOf('#') > -1) {
-      DKDTXURL = process.env.DKDTXURL.split('#');
-      console.log(`您选择的是用"#"隔开\n`)
-     }
-     else if (process.env.DKDTXURL && process.env.DKDTXURL.indexOf('\n') > -1) {
-      DKDTXURL = process.env.DKDTXURL.split('\n');
-      console.log(`您选择的是用换行隔开\n`)
-     } else {
-      DKDTXURL = process.env.DKDTXURL.split()
+   dkdtxurl = process.env.DKDTXURL.split('#');
+   console.log(`您选择的是用"#"隔开\n`)
+    }
+   else if (process.env.DKDTXURL && process.env.DKDTXURL.indexOf('\n') > -1) {
+    dkdtxurl = process.env.DKDTXURL.split('\n');
+    console.log(`您选择的是用换行隔开\n`)
+    } else {
+    dkdtxurl = process.env.DKDTXURL.split()
   };
   if (process.env.DKDTXHD && process.env.DKDTXHD.indexOf('#') > -1) {
-   DKDTXHD = process.env.DKDTXHD.split('#');
+   dkdtxhd = process.env.DKDTXHD.split('#');
    console.log(`您选择的是用"#"隔开\n`)
   }
   else if (process.env.DKDTXHD && process.env.DKDTXHD.indexOf('\n') > -1) {
-   DKDTXHD = process.env.DKDTXHD.split('\n');
+   dkdtxhd = process.env.DKDTXHD.split('\n');
    console.log(`您选择的是用换行隔开\n`)
   } else {
-   DKDTXHD = process.env.DKDTXHD.split()
+   dkdtxhd = process.env.DKDTXHD.split()
   };
   if (process.env.DKDTXBODY && process.env.DKDTXBODY.indexOf('#') > -1) {
-   DKDTXBODY = process.env.DKDTXBODY.split('#');
+   dkdtxbody = process.env.DKDTXBODY.split('#');
    console.log(`您选择的是用"#"隔开\n`)
   }
   else if (process.env.DKDTXBODY && process.env.DKDTXBODY.indexOf('\n') > -1) {
-   DKDTXBODY = process.env.DKDTXBODY.split('\n');
+   dkdtxbody = process.env.DKDTXBODY.split('\n');
    console.log(`您选择的是用换行隔开\n`)
   } else {
-   DKDTXBODY = process.env.DKDTXBODY.split()
+   dkdtxbody = process.env.DKDTXBODY.split()
   };
 
    Object.keys(dkdurl).forEach((item) => {
@@ -143,6 +136,8 @@ if (process.env.DKDTXURL && process.env.DKDTXURL.indexOf('#') > -1) {
         }
     });
 
+
+    console.log(`============ 脚本执行-国际标准时间(UTC)：${new Date().toLocaleString()}  =============\n`)
     console.log(`============ 脚本执行-北京时间(UTC+8)：${new Date(new Date().getTime() + 8 * 60 * 60 * 1000).toLocaleString()}  =============\n`)
  } else {
     dkdurlArr.push($.getdata('dkdurl'))
@@ -164,27 +159,11 @@ if (process.env.DKDTXURL && process.env.DKDTXURL.indexOf('#') > -1) {
 
 !(async () => {
   if (typeof $request !== "undefined") {
-     $.msg($.name, '【提示】请先获取DKD一cookie')
-    return;
-  }
-   console.log(`------------- 共${dkdhdArr.length}个账号----------------\n`)
-  for (let i = 0; i < dkdhdArr.length; i++) {
-    if (dkdhdArr[i]) {
-      message = ''
-      note = ''
-    dkdurl = dkdurlArr[i];
-    dkdhd = dkdhdArr[i];
-    dkdbody = dkdbodyArr[i];
-    dkdtxurl = dkdtxurlArr[i];
-    dkdtxhd = dkdtxhdArr[i];
-    dkdtxbody = dkdtxbodyArr[i];
-    $.index = i + 1;
-    console.log(`\n开始【DKD${$.index}】`)
     await dkdck()
     await dkdtxck()
   } else {
     await dkdqd()
-   }
+
   }
 })()
   .catch((e) => $.logErr(e))
