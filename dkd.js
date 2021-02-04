@@ -35,6 +35,10 @@ let dkdtxurl = '"http://dkd-api.dysdk.com/money/withdraw_do?token=2c5c06d521f833
 let dkdtxhd = '{"Accept":"application/json, text/plain, */*","Origin":"http://dkd-api.dysdk.com","Accept-Encoding":"gzip, deflate","Content-Type":"application/json;charset=utf-8","Connection":"keep-alive","Host":"dkd-api.dysdk.com","User-Agent":"Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148","Referer":"http://dkd-api.dysdk.com/index.html","Accept-Language":"zh-cn","Content-Length":"68","headerInfo":"eyJ0b2tlbiI6IjJjNWMwNmQ1MjFmODMzODNkZWE5NTdkNTBkNjQzMjM3IiwidXRkX2lkIjoiZGY1YzU0YTg0MmNiNGU1YzhhN2Q5ZWVkNmZkNWExNjA1NWUyNjY4NSIsImRldmljZV9udW0iOiIxIiwiZGV2aWNlX3R5cGUiOiJpT1MiLCJsb25nIjoiIiAsImxhdCI6IiIsInJlc29sdXRpb24iOiI0MTQuMCIsImJvb3RfdGltZSI6IjIwMjEtMDItMDMgMTM6MTM6NTUgKzAwMDAiLCJzeXN0ZW1fdmVyc2lvbiI6IjE0LjMiLCJzeXN0ZW1fbW9kZWwiOiJpT1MiLCJkZXZpY2VfYnJhbmQiOiJBcHBsZSIsImRrZF92ZXJzaW9uIjoiMy4wLjIiLCJuZXR3b3JrIjoiV2lmaSIsInZlcnNpb25jb2RlIjoiOCIsImNoYW5uZWwiOiJhcHBsZSJ9"}'
 let dkdtxbody = '{"money":1,"type":2,"withdraw_card":null,"program":8,"is_special":2}'
 
+if ($.isNode()) {
+      console.log(`============ 脚本执行-国际标准时间(UTC)：${new Date().toLocaleString()}  =============\n`)
+      console.log(`============ 脚本执行-北京时间(UTC+8)：${new Date(new Date().getTime() + 8 * 60 * 60 * 1000).toLocaleString()}  =============\n`)
+}
 
 !(async () => {
   if (typeof $request !== "undefined") {
