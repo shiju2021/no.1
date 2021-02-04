@@ -175,6 +175,15 @@ if (!dkdurlArr[0] && !dkdhdArr[0] && !dkdbody[0]) {
       dkdtxbody = dkdtxbodyArr[i];
       $.index = i + 1;
       console.log(`\n开始【【DKD${$.index}】`)
+      await dkdgg()
+      await dkdbx()
+      await dkdbxfb()
+      await dkdcj()
+      await dkdfx()
+      await dkdxs()
+      await dkdxx()
+      await dkdtx() 
+      await dkdyq()
   }
  }
 })()
@@ -422,7 +431,7 @@ if(result.status_code == 10020){
         console.log('签到回执:失败🚫 '+result.message)
 
 }
-await dkdgg()
+/*await dkdgg()
 await dkdbx()
 await dkdbxfb()
 await dkdcj()
@@ -440,7 +449,7 @@ await dkdyq()
       })
     },timeout)
   })
-}
+}*/
 
 //多看点用户信息     
 function dkdxx(timeout = 0) {
