@@ -10,12 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event.repository.owner.id == github.event.sender.id
     env:
-        DKDURL: ${{ secrets.DKDURL }}
-        DKDHD: ${{ secrets.DKDHD }}
-        DKDBODY: ${{ secrets.DKDBODY }}
-        DKDTXURL: ${{ secrets.DKDTXURL }}
-        DKDTXHD: ${{ secrets.DKDTXHD }}
-        DKDTXBODY: ${{ secrets.DKDTXBODY }}
+        TZ: Asia/shanghai
         
     steps:
       - name: Checkout
@@ -28,7 +23,7 @@ jobs:
         run: |
           npm install
       - name: '运行 【dkd】'
-        if: env.DKDURL
+        #if: env.DKDURL
         run: |
           node dkd.js
         env:
