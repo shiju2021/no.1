@@ -20,172 +20,30 @@
 hostname = dkd-api.dysdk.com
 */
 const $ = new Env('多看点');
-const notify = $.isNode() ?require('./sendNotify') : '';
-let status;
-status = (status = ($.getval("hsstatus") || "1") ) > 1 ? `${status}` : ""; // 账号扩展字符
-const dkdurlArr = [],dkdhdArr = [],dkdbodyArr = [],dkdtxurlArr = [],dkdtxhdArr = [],dkdtxbodyArr = []
+/*
 let dkdurl = $.getdata('dkdurl')
 let dkdhd = $.getdata('dkdhd')
 let dkdbody = $.getdata('dkdbody')
 let dkdtxurl = $.getdata('dkdtxurl')
 let dkdtxhd = $.getdata('dkdtxhd')
 let dkdtxbody = $.getdata('dkdtxbody')
-let tz = ($.getval('tz') || '1');//0关闭通知，1默认开启
-const logs =0;//0为关闭日志，1为开启
-var hour=''
-var minute=''
-if ($.isNode()) {
-   hour = new Date( new Date().getTime() + 8 * 60 * 60 * 1000 ).getHours();
-   minute = new Date( new Date().getTime() + 8 * 60 * 60 * 1000 ).getMinutes();
-}else{
-   hour = (new Date()).getHours();
-   minute = (new Date()).getMinutes();
-}
-if ($.isNode()) {
-   if (process.env.DKDURL && process.env.DKDURL.indexOf('#') > -1) {
-    dkdurl = process.env.DKDURL.split('#');
-    console.log(`您选择的是用"#"隔开\n`)
-   }
-   else if (process.env.DKDURL && process.env.DKDURL.indexOf('\n') > -1) {
-    dkdurl = process.env.DKDURL.split('\n');
-    console.log(`您选择的是用换行隔开\n`)
-   } else {
-   dkdurl = process.env.DKDURL.split()
-  };
-  if (process.env.DKDHD && process.env.DKDHD.indexOf('#') > -1) {
-   dkdhd = process.env.DKDHD.split('#');
-   console.log(`您选择的是用"#"隔开\n`)
-  }
-  else if (process.env.DKDHD && process.env.DKDHD.indexOf('\n') > -1) {
-   dkdhd = process.env.DKDHD.split('\n');
-   console.log(`您选择的是用换行隔开\n`)
-  } else {
-   dkdhd = process.env.DKDHD.split()
-  };
-  if (process.env.DKDBODY && process.env.DKDBODY.indexOf('#') > -1) {
-   dkdbody = process.env.DKDBODY.split('#');
-   console.log(`您选择的是用"#"隔开\n`)
-  }
-  else if (process.env.DKDBODY && process.env.DKDBODY.indexOf('\n') > -1) {
-   dkdbody = process.env.DKDBODY.split('\n');
-   console.log(`您选择的是用换行隔开\n`)
-  } else {
-   dkdbody = process.env.DKDBODY.split()
-  };
-if (process.env.DKDTXURL && process.env.DKDTXURL.indexOf('#') > -1) {
-   dkdtxurl = process.env.DKDTXURL.split('#');
-   console.log(`您选择的是用"#"隔开\n`)
-    }
-   else if (process.env.DKDTXURL && process.env.DKDTXURL.indexOf('\n') > -1) {
-    dkdtxurl = process.env.DKDTXURL.split('\n');
-    console.log(`您选择的是用换行隔开\n`)
-    } else {
-    dkdtxurl = process.env.DKDTXURL.split()
-  };
-  if (process.env.DKDTXHD && process.env.DKDTXHD.indexOf('#') > -1) {
-   dkdtxhd = process.env.DKDTXHD.split('#');
-   console.log(`您选择的是用"#"隔开\n`)
-  }
-  else if (process.env.DKDTXHD && process.env.DKDTXHD.indexOf('\n') > -1) {
-   dkdtxhd = process.env.DKDTXHD.split('\n');
-   console.log(`您选择的是用换行隔开\n`)
-  } else {
-   dkdtxhd = process.env.DKDTXHD.split()
-  };
-  if (process.env.DKDTXBODY && process.env.DKDTXBODY.indexOf('#') > -1) {
-   dkdtxbody = process.env.DKDTXBODY.split('#');
-   console.log(`您选择的是用"#"隔开\n`)
-  }
-  else if (process.env.DKDTXBODY && process.env.DKDTXBODY.indexOf('\n') > -1) {
-   dkdtxbody = process.env.DKDTXBODY.split('\n');
-   console.log(`您选择的是用换行隔开\n`)
-  } else {
-   dkdtxbody = process.env.DKDTXBODY.split()
-  };
+*/
+let dkdurl = $.getdata('"http://dkd-api.dysdk.com/user/index"')
+let dkdhd = $.getdata('{"Accept-Encoding":"br;q=1.0, gzip;q=0.9, deflate;q=0.8","Accept":"*/*","Connection":"keep-alive","Content-Type":"application/x-www-form-urlencoded; charset=utf-8","Host":"dkd-api.dysdk.com","If-None-Match":"\"fac4c1c9df96b6f73fc21dfd1231cf498c45ae66\"","User-Agent":"duokandian/3.0.2 (com.duoyou.duokandian1; build:0; iOS 14.3.0) Alamofire/5.4.0","Accept-Language":"zh-Hans-CN;q=1.0","headerinfo":"eyJ0b2tlbiI6IjJjNWMwNmQ1MjFmODMzODNkZWE5NTdkNTBkNjQzMjM3IiwidXRkX2lkIjoiZGY1YzU0YTg0MmNiNGU1YzhhN2Q5ZWVkNmZkNWExNjA1NWUyNjY4NSIsImRldmljZV9udW0iOiIxIiwiZGV2aWNlX3R5cGUiOiJpT1MiLCJvcyI6ImlPUyIsImxvbmciOiIiICwibGF0IjoiIiwicmVzb2x1dGlvbiI6IjQxNC4wIiwiYm9vdF90aW1lIjoiMjAyMS0wMi0wMSAxMzo1NTowMCArMDAwMCIsInN5c3RlbV92ZXJzaW9uIjoiMTQuMyIsInN5c3RlbV9tb2RlbCI6ImlPUyIsImRldmljZV9icmFuZCI6IkFwcGxlIiwiZGtkX3ZlcnNpb24iOiIzLjAuMiIsIm5ldHdvcmsiOiJXaWZpIiwidmVyc2lvbmNvZGUiOiI4IiwiY2hhbm5lbCI6ImFwcGxlIn0=","Content-Length":"38"}')
+let dkdbody = $.getdata('token=2c5c06d521f83383dea957d50d643237')
+let dkdtxurl = $.getdata('"http://dkd-api.dysdk.com/money/withdraw_do?token=2c5c06d521f83383dea957d50d643237&headerInfo=eyJ0b2tlbiI6IjJjNWMwNmQ1MjFmODMzODNkZWE5NTdkNTBkNjQzMjM3IiwidXRkX2lkIjoiZGY1YzU0YTg0MmNiNGU1YzhhN2Q5ZWVkNmZkNWExNjA1NWUyNjY4NSIsImRldmljZV9udW0iOiIxIiwiZGV2aWNlX3R5cGUiOiJpT1MiLCJsb25nIjoiIiAsImxhdCI6IiIsInJlc29sdXRpb24iOiI0MTQuMCIsImJvb3RfdGltZSI6IjIwMjEtMDItMDMgMTM6MTM6NTUgKzAwMDAiLCJzeXN0ZW1fdmVyc2lvbiI6IjE0LjMiLCJzeXN0ZW1fbW9kZWwiOiJpT1MiLCJkZXZpY2VfYnJhbmQiOiJBcHBsZSIsImRrZF92ZXJzaW9uIjoiMy4wLjIiLCJuZXR3b3JrIjoiV2lmaSIsInZlcnNpb25jb2RlIjoiOCIsImNoYW5uZWwiOiJhcHBsZSJ9"')
+let dkdtxhd = $.getdata('{"Accept":"application/json, text/plain, */*","Origin":"http://dkd-api.dysdk.com","Accept-Encoding":"gzip, deflate","Content-Type":"application/json;charset=utf-8","Connection":"keep-alive","Host":"dkd-api.dysdk.com","User-Agent":"Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148","Referer":"http://dkd-api.dysdk.com/index.html","Accept-Language":"zh-cn","Content-Length":"68","headerInfo":"eyJ0b2tlbiI6IjJjNWMwNmQ1MjFmODMzODNkZWE5NTdkNTBkNjQzMjM3IiwidXRkX2lkIjoiZGY1YzU0YTg0MmNiNGU1YzhhN2Q5ZWVkNmZkNWExNjA1NWUyNjY4NSIsImRldmljZV9udW0iOiIxIiwiZGV2aWNlX3R5cGUiOiJpT1MiLCJsb25nIjoiIiAsImxhdCI6IiIsInJlc29sdXRpb24iOiI0MTQuMCIsImJvb3RfdGltZSI6IjIwMjEtMDItMDMgMTM6MTM6NTUgKzAwMDAiLCJzeXN0ZW1fdmVyc2lvbiI6IjE0LjMiLCJzeXN0ZW1fbW9kZWwiOiJpT1MiLCJkZXZpY2VfYnJhbmQiOiJBcHBsZSIsImRrZF92ZXJzaW9uIjoiMy4wLjIiLCJuZXR3b3JrIjoiV2lmaSIsInZlcnNpb25jb2RlIjoiOCIsImNoYW5uZWwiOiJhcHBsZSJ9"}')
+let dkdtxbody = $.getdata('{"money":1,"type":2,"withdraw_card":null,"program":8,"is_special":2}')
 
-   Object.keys(dkdurl).forEach((item) => {
-        if (dkdurl[item]) {
-          dkdurlArr.push(dkdurl[item])
-        }
-    });
-  Object.keys(dkdhd).forEach((item) => {
-        if (dkdhd[item]) {
-          dkdhdArr.push(dkdhd[item])
-        }
-    });
-
-  Object.keys(dkdbody).forEach((item) => {
-        if (dkdbody[item]) {
-          dkdbodyArr.push(dkdbody[item])
-        }
-    });
-  Object.keys(dkdtxurl).forEach((item) => {
-        if (dkdtxurl[item]) {
-          dkdtxurlArr.push(dkdtxurl[item])
-        }
-    });
-
-  Object.keys(dkdtxhd).forEach((item) => {
-        if (dkdtxhd[item]) {
-          dkdtxhdArr.push(dkdtxhd[item])
-        }
-    });
-  Object.keys(dkdtxbody).forEach((item) => {
-        if (dkdtxbody[item]) {
-          dkdtxbodyArr.push(dkdtxbody[item])
-        }
-    });
-
-
-    console.log(`============ 脚本执行-国际标准时间(UTC)：${new Date().toLocaleString()}  =============\n`)
-    console.log(`============ 脚本执行-北京时间(UTC+8)：${new Date(new Date().getTime() + 8 * 60 * 60 * 1000).toLocaleString()}  =============\n`)
- } else {
-    dkdurlArr.push($.getdata('dkdurl'))
-    dkdhdArr.push($.getdata('dkdhd'))
-    dkdbodyArr.push($.getdata('dkdbody'))
-    dkdtxurlArr.push($.getdata('dkdtxurl'))
-    dkdtxhdArr.push($.getdata('dkdtxhd'))
-    dkdtxbodyArr.push($.getdata('dkdtxbody'))
-    let hscount = ($.getval('hscount') || '1');
-  for (let i = 2; i <= hscount; i++) {
-    dkdurlArr.push($.getdata(`dkdurl${i}`))
-    dkdhdArr.push($.getdata(`dkdhd${i}`))
-    dkdbodyArr.push($.getdata(`dkdbody${i}`))
-    dkdtxurlArr.push($.getdata(`dkdtxurl${i}`))
-    dkdtxhdArr.push($.getdata(`dkdtxhd${i}`))
-    dkdtxbodyArr.push($.getdata(`dkdtxbody${i}`))
-  }
-}
 
 !(async () => {
-if (!dkdurlArr[0] && !dkdhdArr[0] && !dkdbody[0]) {
-    $.msg($.name, '【提示】请先获DKD一cookie')
-    return;
+  if (typeof $request !== "undefined") {
+    await dkdck()
+    await dkdtxck()
+  } else {
+    await dkdqd()
+
   }
-   console.log(`------------- 共${dkdhdArr.length}个账号----------------\n`)
-  for (let i = 0; i < dkdhdArr.length; i++) {
-    if (dkdhdArr[i]) {
-      message = ''
-      note = ''
-      dkdurl = dkdurlArr[i];
-      dkdhd = dkdhdArr[i];
-      dkdbody = dkdbodyArr[i];
-      dkdtxurl = dkdtxurlArr[i];
-      dkdtxhd = dkdtxhdArr[i];
-      dkdtxbody = dkdtxbodyArr[i];
-      $.index = i + 1;
-      console.log(`\n开始【【DKD${$.index}】`)
-      await dkdgg()
-      await dkdbx()
-      await dkdbxfb()
-      await dkdcj()
-      await dkdfx()
-      await dkdxs()
-      await dkdxx()
-      await dkdtx() 
-      await dkdyq()
-  }
- }
 })()
   .catch((e) => $.logErr(e))
   .finally(() => $.done())
@@ -431,7 +289,7 @@ if(result.status_code == 10020){
         console.log('签到回执:失败🚫 '+result.message)
 
 }
-/*await dkdgg()
+await dkdgg()
 await dkdbx()
 await dkdbxfb()
 await dkdcj()
@@ -449,7 +307,7 @@ await dkdyq()
       })
     },timeout)
   })
-}*/
+}
 
 //多看点用户信息     
 function dkdxx(timeout = 0) {
