@@ -28,12 +28,14 @@ let dkdtxurl = $.getdata('dkdtxurl')
 let dkdtxhd = $.getdata('dkdtxhd')
 let dkdtxbody = $.getdata('dkdtxbody')
 */
+if ($.isNode()) {
 let dkdurl = '"http://dkd-api.dysdk.com/user/index"'
 let dkdhd = '{"Accept-Encoding":"br;q=1.0, gzip;q=0.9, deflate;q=0.8","Accept":"*/*","Connection":"keep-alive","Content-Type":"application/x-www-form-urlencoded; charset=utf-8","Host":"dkd-api.dysdk.com","If-None-Match":"\"fac4c1c9df96b6f73fc21dfd1231cf498c45ae66\"","User-Agent":"duokandian/3.0.2 (com.duoyou.duokandian1; build:0; iOS 14.3.0) Alamofire/5.4.0","Accept-Language":"zh-Hans-CN;q=1.0","headerinfo":"eyJ0b2tlbiI6IjJjNWMwNmQ1MjFmODMzODNkZWE5NTdkNTBkNjQzMjM3IiwidXRkX2lkIjoiZGY1YzU0YTg0MmNiNGU1YzhhN2Q5ZWVkNmZkNWExNjA1NWUyNjY4NSIsImRldmljZV9udW0iOiIxIiwiZGV2aWNlX3R5cGUiOiJpT1MiLCJvcyI6ImlPUyIsImxvbmciOiIiICwibGF0IjoiIiwicmVzb2x1dGlvbiI6IjQxNC4wIiwiYm9vdF90aW1lIjoiMjAyMS0wMi0wMSAxMzo1NTowMCArMDAwMCIsInN5c3RlbV92ZXJzaW9uIjoiMTQuMyIsInN5c3RlbV9tb2RlbCI6ImlPUyIsImRldmljZV9icmFuZCI6IkFwcGxlIiwiZGtkX3ZlcnNpb24iOiIzLjAuMiIsIm5ldHdvcmsiOiJXaWZpIiwidmVyc2lvbmNvZGUiOiI4IiwiY2hhbm5lbCI6ImFwcGxlIn0=","Content-Length":"38"}'
 let dkdbody = 'token=2c5c06d521f83383dea957d50d643237'
 let dkdtxurl = '"http://dkd-api.dysdk.com/money/withdraw_do?token=2c5c06d521f83383dea957d50d643237&headerInfo=eyJ0b2tlbiI6IjJjNWMwNmQ1MjFmODMzODNkZWE5NTdkNTBkNjQzMjM3IiwidXRkX2lkIjoiZGY1YzU0YTg0MmNiNGU1YzhhN2Q5ZWVkNmZkNWExNjA1NWUyNjY4NSIsImRldmljZV9udW0iOiIxIiwiZGV2aWNlX3R5cGUiOiJpT1MiLCJsb25nIjoiIiAsImxhdCI6IiIsInJlc29sdXRpb24iOiI0MTQuMCIsImJvb3RfdGltZSI6IjIwMjEtMDItMDMgMTM6MTM6NTUgKzAwMDAiLCJzeXN0ZW1fdmVyc2lvbiI6IjE0LjMiLCJzeXN0ZW1fbW9kZWwiOiJpT1MiLCJkZXZpY2VfYnJhbmQiOiJBcHBsZSIsImRrZF92ZXJzaW9uIjoiMy4wLjIiLCJuZXR3b3JrIjoiV2lmaSIsInZlcnNpb25jb2RlIjoiOCIsImNoYW5uZWwiOiJhcHBsZSJ9"')
 let dkdtxhd = '{"Accept":"application/json, text/plain, */*","Origin":"http://dkd-api.dysdk.com","Accept-Encoding":"gzip, deflate","Content-Type":"application/json;charset=utf-8","Connection":"keep-alive","Host":"dkd-api.dysdk.com","User-Agent":"Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148","Referer":"http://dkd-api.dysdk.com/index.html","Accept-Language":"zh-cn","Content-Length":"68","headerInfo":"eyJ0b2tlbiI6IjJjNWMwNmQ1MjFmODMzODNkZWE5NTdkNTBkNjQzMjM3IiwidXRkX2lkIjoiZGY1YzU0YTg0MmNiNGU1YzhhN2Q5ZWVkNmZkNWExNjA1NWUyNjY4NSIsImRldmljZV9udW0iOiIxIiwiZGV2aWNlX3R5cGUiOiJpT1MiLCJsb25nIjoiIiAsImxhdCI6IiIsInJlc29sdXRpb24iOiI0MTQuMCIsImJvb3RfdGltZSI6IjIwMjEtMDItMDMgMTM6MTM6NTUgKzAwMDAiLCJzeXN0ZW1fdmVyc2lvbiI6IjE0LjMiLCJzeXN0ZW1fbW9kZWwiOiJpT1MiLCJkZXZpY2VfYnJhbmQiOiJBcHBsZSIsImRrZF92ZXJzaW9uIjoiMy4wLjIiLCJuZXR3b3JrIjoiV2lmaSIsInZlcnNpb25jb2RlIjoiOCIsImNoYW5uZWwiOiJhcHBsZSJ9"}'
 let dkdtxbody = '{"money":1,"type":2,"withdraw_card":null,"program":8,"is_special":2}'
+}
 
 if ($.isNode()) {
       console.log(`============ 脚本执行-国际标准时间(UTC)：${new Date().toLocaleString()}  =============\n`)
