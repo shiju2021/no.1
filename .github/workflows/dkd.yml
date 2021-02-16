@@ -25,6 +25,6 @@ jobs:
       - name: '运行 【dkd】'
         #if: env.DKDURL
         run: |
-          node dkd.js
+          node zhima.js
         env:
           PUSH_KEY: ${{ secrets.PUSH_KEY }}
