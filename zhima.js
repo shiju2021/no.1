@@ -33,7 +33,7 @@ const notifyttt = 1 // 0为关闭外部推送，1为12 23 点外部推送
 const notifyInterval = 2; // 0为关闭通知，1为所有通知，2为12 23 点通知  ， 3为 6 12 18 23 点通知 
 $.message = '', COOKIES_SPLIT = '', ddtime = '';
 const zhimabodyArr = [];
-let zhimabodyVal = ``;
+let zhimabodyVal = `appversion=10&desarr=B9UrwK6qqhbGjERFP3eNKnGZOgPLMKoE0LqUPC7rhuvRBwh5rmsJ85GcyX87%2BNssL1EvonhUmpN07J1H6OW9MpP5Vvvl4Yq5CQaBpYAXx3hyplLIreGshvXGPjmzxk7Aj9aHbeHKhd0mlkB5LXyKPLI99zy4582cZDSO7K8PWJVxsQT7ew5znR/n0ObJByGx9T5acfk0ZOgPXuXmK9edHIRS6Wg/S8A3d7%2B42mDBy3nupdRmUwSpLubPyS8Tbd83dKbiSpuf7XZr8nP3LmZPHJz7N8xxg/cWITLjtGVGL87m9OdIOM/QvHss5thpa%2BKZwZC6Wo/6ccJ22Xnp9ZA%2B15mAqy4W4RFRt3G7Jg%2B0XukvjY3fmVfCTV9e5wAvm7W2BI9dOxi29D/KZYTMiy0kfwz0ziLfKyhuwkAtqrc/ppaCNZ3flub3bPZb1A6D9TCcdCkbeK7VJgibQpLIreGshvXGE9lcJFXx2EgkMI8OReFcZVgYBqizXSw69MsoeuZ71FhHQILR89WJ%2BU9uUqT32dxYu%2Bfkkl/FqSG`;
 let middlezhimabody = [];
 
 
